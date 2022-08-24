@@ -1,11 +1,19 @@
-const Product = require('../models/product');
+const Book = require('../models/book');
 
-exports.getAllProduct = async (req, res) => {
+exports.getAllBook = async (req, res) => {
   try {
-    const Tour = await Product.find({});
+    const queryObj = { ...req.params };
+    const excludeFields = ['sort', 'page', 'limit', 'fields'];
+    excludeFields.forEach(el => delete queryObj[el]);
+
+    const query = Book.find(queryObj);
+
+    const books = await query;
+
     res.status(200).json({
       status: 'success',
-      data: Tour,
+      results: books.length,
+      data: books,
     });
   } catch (err) {
     res.status(400).json({
@@ -15,12 +23,12 @@ exports.getAllProduct = async (req, res) => {
   }
 };
 
-exports.createProduct = async (req, res) => {
+exports.createBook = async (req, res) => {
   try {
-    const newTour = await Product.create(req.body);
+    const newBook = await Book.create(req.body);
     res.status(201).json({
       status: 'success',
-      message: newTour,
+      message: newBook,
     });
   } catch (err) {
     res.status(400).json({
@@ -30,14 +38,14 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-exports.getProduct = async (req, res) => {
+exports.getBook = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const book = await Book.findById(req.params.id);
 
     res.status(200).json({
       status: 'success',
       data: {
-        product,
+        book,
       },
     });
   } catch (err) {
@@ -48,9 +56,9 @@ exports.getProduct = async (req, res) => {
   }
 };
 
-exports.deleteProduct = async (req, res) => {
+exports.deleteBook = async (req, res) => {
   try {
-    await Product.findByIdAndDelete(req.params.id);
+    await Book.findByIdAndDelete(req.params.id);
 
     res.status(204).json({
       status: 'success',
@@ -64,16 +72,16 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
-exports.updateProduct = async (req, res) => {
+exports.updateBook = async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    const book = await Book.findByIdAndUpdate(req.params.id, req.body, {
       runValidators: true,
       new: true,
     });
 
     res.status(200).json({
       status: 'success',
-      data: product,
+      data: book,
     });
   } catch (err) {
     res.status(400).json({
