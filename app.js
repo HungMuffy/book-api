@@ -1,15 +1,14 @@
 const express = require('express');
+const morgan = require('morgan');
+
 const app = express();
-const morgan = express('morgan');
 
 const booksRouter = require('./routes/bookRoutes');
 // MiddleWare
-app.use(express.json());
-
-if (process.argv.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-app.use('/api/v1/products', booksRouter);
+app.use('/api/v1/books', booksRouter);
 
 module.exports = app;
