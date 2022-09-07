@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const bookSchema = mongoose.Schema(
   {
@@ -72,6 +73,14 @@ const bookSchema = mongoose.Schema(
 
 bookSchema.virtual('totalPrice').get(function () {
   return this.price - (this.priceDiscount ? this.priceDiscount : 0);
+});
+
+// Document middleware
+bookSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, {
+    lower: true,
+  });
+  next();
 });
 
 const Book = mongoose.model('Book', bookSchema);

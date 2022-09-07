@@ -3,6 +3,8 @@ const router = express.Router();
 
 const bookController = require('../controllers/bookController');
 
+router.route('/monthly-book/:year').get()
+
 router.route('/book-stats').get(bookController.getBookStats);
 
 router
