@@ -18,6 +18,13 @@ if (process.env.NODE_ENV === 'development') {
 app.use(bodyParser.json());
 app.use(helmet());
 
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
+
+// Routes
 app.use('/api/v1/books', booksRouter);
 app.use('/api/v1/users', usersRouter);
 

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const Book = require('../models/book');
+=======
+const Book = require('../models/bookModel');
+>>>>>>> remotes/origin/master
 const APIFeatures = require('./../utils/apiFeatures');
 const AppError = require('./../utils/appError');
 const catchAsync = require('./../utils/catchAsync');
@@ -114,7 +118,11 @@ exports.getBookStats = catchAsync(async (req, res, next) => {
 
 exports.getMonthlyBook = catchAsync(async (req, res) => {
   const year = req.params.year * 1;
+<<<<<<< HEAD
   const plan = await Book.aggregate([
+=======
+  const book = await Book.aggregate([
+>>>>>>> remotes/origin/master
     {
       $unwind: '$publishDates',
     },
@@ -128,20 +136,39 @@ exports.getMonthlyBook = catchAsync(async (req, res) => {
     },
     {
       $group: {
+<<<<<<< HEAD
         _id: { $month: '$startDates' },
         numTypeBooks: { $sum: 1 },
+=======
+        _id: { $month: '$publishDates' },
+        numBooksPublishes: { $sum: 1 },
+>>>>>>> remotes/origin/master
         books: {
           $push: '$name',
         },
       },
     },
+<<<<<<< HEAD
+=======
+    {
+      $addFields: { month: '$_id' },
+    },
+    {
+      $sort: { month: 1 },
+    },
+>>>>>>> remotes/origin/master
   ]);
 
   res.status(200).json({
     status: 'success',
+<<<<<<< HEAD
     results: plan.length,
     data: {
       plan,
     },
+=======
+    results: book.length,
+    data: book,
+>>>>>>> remotes/origin/master
   });
 });

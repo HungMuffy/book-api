@@ -5,6 +5,13 @@ const userController = require('./../controllers/userController');
 const authController = require('./../controllers/authController');
 
 Router.post('/signup', authController.signUp);
+<<<<<<< HEAD
+=======
+Router.post('/login', authController.logIn);
+
+Router.post('/forgotPassword', authController.forgotPassword);
+Router.patch('/resetPassword/:token', authController.resetPassword);
+>>>>>>> remotes/origin/master
 
 Router.route('')
   .get(userController.getAllUsers)
