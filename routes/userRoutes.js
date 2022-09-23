@@ -17,6 +17,7 @@ Router.patch(
 );
 
 Router.patch('/updateMe', authController.protect, userController.updateMe);
+Router.patch('/deactiveMe', authController.protect, userController.deactiveMe);
 
 Router.route('')
   .get(userController.getAllUsers)
