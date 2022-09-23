@@ -16,41 +16,41 @@ const usersRouter = require('./routes/userRoutes');
 
 // MiddleWare
 // Add security header
-app.use(helmet());
+// app.use(helmet());
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
 // Limit request
-const limiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 100,
-  message: 'Too many request from this IP, please try again in an hour!',
-});
-app.use('/api', limiter);
+// const limiter = rateLimit({
+//   windowMs: 60 * 60 * 1000,
+//   max: 100,
+//   message: 'Too many request from this IP, please try again in an hour!',
+// });
+// app.use('/api', limiter);
 
 // Parse req body
 app.use(bodyParser.json({ limit: '10kb' }));
 
 // Data sanitization against NoSQL query injection
-app.use(mongoSanitize());
+// app.use(mongoSanitize());
 
 // Data sanitization against XSS
-app.use(xss());
+// app.use(xss());
 
 // Prevent parameter pollution
-app.use(
-  hpp({
-    whitelist: [
-      'price',
-      'rating',
-      'ratingsAverage',
-      'ratingsQuantity',
-      'totalPrice',
-    ],
-  })
-);
+// app.use(
+//   hpp({
+//     whitelist: [
+//       'price',
+//       'rating',
+//       'ratingsAverage',
+//       'ratingsQuantity',
+//       'totalPrice',
+//     ],
+//   })
+// );
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
