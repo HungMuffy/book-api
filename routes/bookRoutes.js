@@ -1,27 +1,4 @@
 const express = require('express');
-<<<<<<< HEAD
-const router = express.Router();
-
-const bookController = require('../controllers/bookController');
-
-router.route('/monthly-book/:year').get()
-
-router.route('/book-stats').get(bookController.getBookStats);
-
-router
-  .route('/top-5-best-books')
-  .get(bookController.aliasTopBooks, bookController.getAllBook);
-
-router.route('').get(bookController.getAllBook).post(bookController.createBook);
-
-router
-  .route('/:id')
-  .get(bookController.getBook)
-  .patch(bookController.updateBook)
-  .delete(bookController.deleteBook);
-
-module.exports = router;
-=======
 const Router = express.Router();
 const authController = require('./../controllers/authController');
 const bookController = require('../controllers/bookController');
@@ -49,4 +26,3 @@ Router.route('/:id')
   );
 
 module.exports = Router;
->>>>>>> remotes/origin/master

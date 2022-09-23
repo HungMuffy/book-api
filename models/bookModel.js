@@ -64,13 +64,10 @@ const bookSchema = mongoose.Schema(
       },
       required: [true, 'A book must have a level reading!'],
     },
-<<<<<<< HEAD
-=======
     bannedBook: {
       type: Boolean,
       default: false,
     },
->>>>>>> remotes/origin/master
   },
   {
     toJSON: { virtuals: true },
@@ -90,8 +87,6 @@ bookSchema.pre('save', function (next) {
   next();
 });
 
-<<<<<<< HEAD
-=======
 // Aggreagation middleware
 bookSchema.pre('aggregate', function (next) {
   this.pipeline().unshift({
@@ -100,7 +95,6 @@ bookSchema.pre('aggregate', function (next) {
   next();
 });
 
->>>>>>> remotes/origin/master
 const Book = mongoose.model('Book', bookSchema);
 
 module.exports = Book;

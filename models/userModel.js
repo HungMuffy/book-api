@@ -1,30 +1,11 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-<<<<<<< HEAD
-=======
 const crypto = require('crypto');
->>>>>>> remotes/origin/master
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-<<<<<<< HEAD
-    required: [true, 'Please enter your name 🐸'],
-  },
-  email: {
-    type: String,
-    required: [true, 'Please enter your email 🐸'],
-    unique: true,
-    lowercase: true,
-    validate: [validator.isEmail, 'Please enter a valid email'],
-  },
-  photo: String,
-  password: {
-    type: String,
-    required: [true, 'Please enter your password 🙂'],
-    minlength: 8,
-=======
     required: [true, 'Please tell us your name!'],
   },
   email: {
@@ -45,14 +26,10 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please provide a password!'],
     minlength: 8,
     select: false,
->>>>>>> remotes/origin/master
   },
   passwordConfirm: {
     type: String,
     required: [true, 'Please confirm your password'],
-<<<<<<< HEAD
-  },
-=======
     validate: {
       // This is only works on CREATE and SAVE!!!
       validator: function (el) {
@@ -64,23 +41,14 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
->>>>>>> remotes/origin/master
 });
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 
-<<<<<<< HEAD
-  this.password = await bcrypt.hash(this.password, 12);
-  this.passwordConfirm = undefined;
-});
-
-=======
-  // Hash
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
 
-  // Delete password confirm before save it to DB
   this.passwordConfirm = undefined;
   next();
 });
@@ -98,6 +66,7 @@ userSchema.pre('save', function (next) {
   this.passwordChangedAt = Date.now() - 1000;
   next();
 });
+
 userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.passwordChangedAt) {
     const changedTimestamp = parseInt(
@@ -121,7 +90,6 @@ userSchema.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
->>>>>>> remotes/origin/master
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

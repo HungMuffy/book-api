@@ -5,17 +5,14 @@ class APIFeatures {
   }
 
   filter() {
-    // 1) Basic filtering
     const queryObj = { ...this.queryStr };
     const excludeFields = ['sort', 'page', 'limit', 'fields'];
     excludeFields.forEach(el => delete queryObj[el]);
 
-    // 2) Advanced filtering
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
 
     this.query = this.query.find(JSON.parse(queryStr));
-
     return this;
   }
 
@@ -26,7 +23,6 @@ class APIFeatures {
     } else {
       this.query = this.query.sort('-createdAt');
     }
-
     return this;
   }
 
